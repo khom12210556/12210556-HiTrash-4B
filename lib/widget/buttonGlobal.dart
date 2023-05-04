@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:hitrash/view/dashboard.dart';
 
 class ButtonGlobal extends StatelessWidget {
   const ButtonGlobal({super.key});
@@ -10,6 +11,10 @@ class ButtonGlobal extends StatelessWidget {
     return InkWell(
       onTap: () {
         print('Login');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DashboardView()),
+        );
       },
       child: Container(
         alignment: Alignment.center,
