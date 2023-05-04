@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
+import 'package:hitrash/view/permintaanpenjemputan.dart';
 import 'package:hitrash/widget/menubutton.dart';
 
 class DashboardView extends StatefulWidget {
@@ -132,7 +133,7 @@ class _DashboardViewState extends State<DashboardView> {
             ),
           ),
           Card(
-            margin: EdgeInsets.fromLTRB(0, 230, 0, 0),
+            margin: EdgeInsets.fromLTRB(0, 260, 0, 0),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Container(
