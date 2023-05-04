@@ -133,7 +133,7 @@ class _DashboardViewState extends State<DashboardView> {
             ),
           ),
           Card(
-            margin: EdgeInsets.fromLTRB(0, 230, 0, 0),
+            margin: EdgeInsets.fromLTRB(0, 260, 0, 0),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Container(

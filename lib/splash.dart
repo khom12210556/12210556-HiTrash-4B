@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:hitrash/view/dashboard.dart';
 import 'package:hitrash/view/login.dart';
+import 'package:hitrash/view/permintaanpenjemputan.dart';
 
 class SplashScreen extends StatefulWidget {
   _SplashScreen createState() => _SplashScreen();
