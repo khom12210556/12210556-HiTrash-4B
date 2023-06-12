@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hitrash/providers/mapprovider.dart';
@@ -9,10 +10,15 @@ void main(List<String> args) {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => MapProvider()),
-        // add more providers if needed
+        // tambahkan provider lain jika diperlukan
       ],
-      child: MaterialApp(
-        home: SplashScreen(),
+      child: Builder(
+        builder: (context) {
+          context.read<MapProvider>().mulai_bacalokasi();
+          return MaterialApp(
+            home: SplashScreen(),
+          );
+        },
       ),
     ),
   );

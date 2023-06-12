@@ -11,6 +11,8 @@ class MapProvider with ChangeNotifier {
   MapController mapController = MapController();
   bool mapReady = false;
   bool mulaibaca = false;
+  LatLng? _selectedLocation;
+  LatLng? get selectedLocation => _selectedLocation;
 
   void mulai_bacalokasi() {
     if (mulaibaca == false) {
@@ -93,5 +95,10 @@ class MapProvider with ChangeNotifier {
     } else if (_accuracy == LocationAccuracy.best) {
       _accuracy = LocationAccuracy.bestForNavigation;
     }
+  }
+
+  void selectLocation(LatLng location) {
+    _selectedLocation = location;
+    notifyListeners();
   }
 }

@@ -2,17 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:hitrash/providers/mapprovider.dart';
+import 'package:hitrash/view/dashboardCostumer.dart';
+import 'package:hitrash/view/dashboardPenjemput.dart';
 import 'package:hitrash/view/mapview.dart';
 import 'package:hitrash/view/permintaanpenjemputan.dart';
 import 'package:provider/provider.dart';
 import 'package:hitrash/view/mapview.dart';
 
-class ubahStatus extends StatelessWidget {
-  const ubahStatus({super.key});
+class ubahStatus extends StatefulWidget {
+  const ubahStatus({Key? key}) : super(key: key);
+
+  @override
+  State<ubahStatus> createState() => _ubahStatusState();
+}
+
+class _ubahStatusState extends State<ubahStatus> {
+  String selected = "baru";
+
+  List<String> data = const ["baru", "selesai", "batal"];
 
   @override
   Widget build(BuildContext context) {
     final Provider = context.read<MapProvider>();
+
     return Scaffold(
       backgroundColor: Color(0xFF0079BF),
       body: SafeArea(
@@ -106,61 +118,47 @@ class ubahStatus extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        'Status : Baru',
+                        'Status : $selected',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 30,
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MapView()),
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 20),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Colors.green,
-                            ),
-                            width: 260,
-                            height: 150,
-                            child: FlutterMap(
-                              options: MapOptions(
-                                center: Provider.latLng,
-                                onMapReady: () {
-                                  Provider.mapReady = true;
-                                },
-                              ),
-                              children: [
-                                TileLayer(
-                                  urlTemplate:
-                                      'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
-                                ),
-                                MarkerLayer(
-                                  markers: [
-                                    Marker(
-                                      point: Provider.latLng,
-                                      builder: (context) {
-                                        return Icon(
-                                          MaterialCommunityIcons
-                                              .map_marker_outline,
-                                          color: Colors.red,
-                                          size: 20,
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ],
-                              mapController: Provider.mapController,
+                      map(Provider: Provider),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Center(
+                        child: Container(
+                          height: 50,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 30, 247, 142),
+                              borderRadius: BorderRadius.circular(30)),
+                          child: Center(
+                            child: DropdownButton<String>(
+                              value: selected,
+                              hint: Text("Status"),
+                              onChanged: (value) {
+                                print(value);
+                                setState(() {
+                                  selected = value!;
+                                });
+                              },
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                              items: data
+                                  .map((e) => DropdownMenuItem<String>(
+                                        value: e,
+                                        child: Text(e),
+                                      ))
+                                  .toList(),
                             ),
                           ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -169,6 +167,67 @@ class ubahStatus extends StatelessWidget {
           ),
         ],
       )),
+    );
+  }
+}
+
+class map extends StatelessWidget {
+  const map({
+    super.key,
+    required this.Provider,
+  });
+
+  final MapProvider Provider;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DashboardView()),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 20),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            color: Colors.green,
+          ),
+          width: 260,
+          height: 150,
+          child: FlutterMap(
+            options: MapOptions(
+              center: Provider.latLng,
+              onMapReady: () {
+                Provider.mapReady = true;
+              },
+            ),
+            children: [
+              TileLayer(
+                urlTemplate:
+                    'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+              ),
+              MarkerLayer(
+                markers: [
+                  Marker(
+                    point: Provider.latLng,
+                    builder: (context) {
+                      return Icon(
+                        MaterialCommunityIcons.map_marker_outline,
+                        color: Colors.red,
+                        size: 30,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+            mapController: Provider.mapController,
+          ),
+        ),
+      ),
     );
   }
 }
