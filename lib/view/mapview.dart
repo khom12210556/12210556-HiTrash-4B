@@ -3,21 +3,26 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:hitrash/providers/mapprovider.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:latlong2/latlong.dart';
 
 class MapView extends StatelessWidget {
-  const MapView({super.key});
+  final Function(LatLng) onLocationSelected;
+
+  MapView({required this.onLocationSelected});
 
   @override
   Widget build(BuildContext context) {
-    final Provider = context.read<MapProvider>();
+    final mapProvider = Provider.of<MapProvider>(context);
+
     return Scaffold(
       body: Stack(
         children: [
           FlutterMap(
             options: MapOptions(
-              center: Provider.latLng,
+              center: mapProvider.latLng,
               onMapReady: () {
-                Provider.mapReady = true;
+                mapProvider.mapReady = true;
               },
             ),
             children: [
@@ -28,20 +33,53 @@ class MapView extends StatelessWidget {
               MarkerLayer(
                 markers: [
                   Marker(
-                    point: Provider.latLng,
+                    point: mapProvider.latLng,
                     builder: (context) {
-                      return Icon(
-                        MaterialCommunityIcons.map_marker_outline,
-                        color: Colors.red,
-                        size: 20,
+                      return Stack(
+                        children: [
+                          Positioned(
+                            top: MediaQuery.of(context).size.height / 2 - 20,
+                            left: MediaQuery.of(context).size.width / 2 - 20,
+                            child: Icon(
+                              Icons.location_on,
+                              color: Colors.blue,
+                              size: 40,
+                            ),
+                          ),
+                        ],
                       );
                     },
                   ),
                 ],
               ),
             ],
-            mapController: Provider.mapController,
+            mapController: mapProvider.mapController,
           ),
+          Positioned(
+            top: MediaQuery.of(context).size.height / 2 -
+                20, // Menyesuaikan ikon di tengah vertikal
+            left: MediaQuery.of(context).size.width / 2 -
+                20, // Menyesuaikan ikon di tengah horizontal
+            child: Icon(
+              Icons.location_on,
+              color: Colors.blue,
+              size: 40,
+            ),
+          ),
+          Positioned(
+            bottom: 10,
+            left: (MediaQuery.of(context).size.width / 2) - 30,
+            child: ElevatedButton(
+              child: Text('Pilih'),
+              onPressed: () {
+                final selectedLocation = mapProvider.selectedLocation;
+                if (selectedLocation != null) {
+                  onLocationSelected(selectedLocation);
+                }
+                Navigator.pop(context);
+              },
+            ),
+          )
         ],
       ),
     );

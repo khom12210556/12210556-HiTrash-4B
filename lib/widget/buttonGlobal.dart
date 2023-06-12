@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:hitrash/view/dashboard.dart';
+import 'package:hitrash/view/dashboardPenjemput.dart';
 
 class ButtonGlobal extends StatelessWidget {
   const ButtonGlobal({super.key});

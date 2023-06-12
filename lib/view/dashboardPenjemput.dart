@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:hitrash/view/permintaanpenjemputan.dart';
+import 'package:hitrash/view/profil.dart';
 import 'package:hitrash/widget/menubutton.dart';
 
 class DashboardView extends StatefulWidget {
@@ -48,7 +49,7 @@ class _DashboardViewState extends State<DashboardView> {
                         ),
                         children: [
                           TextSpan(
-                            text: ' Muhammad Ronaldo',
+                            text: ' El Lukman Messi',
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
@@ -75,7 +76,7 @@ class _DashboardViewState extends State<DashboardView> {
                           ),
                         ),
                         Text(
-                          'ronaldofixgoal@gmail.com',
+                          'ankaramessicuy@gmail.com',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
@@ -182,10 +183,19 @@ class _DashboardViewState extends State<DashboardView> {
                               Subtitle: 'Periksa Permintaan Penjemputan Anda',
                             ),
                           ),
-                          WidgetMenu(
-                            logonya: 'assets/tipper.png',
-                            NamaMenu: 'Permintaan Penjemputan',
-                            Subtitle: 'Periksa Permintaan Penjemputan Anda',
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => profilView()),
+                              );
+                            },
+                            child: WidgetMenu(
+                              logonya: 'assets/tipper.png',
+                              NamaMenu: 'Profil',
+                              Subtitle: 'Profil anda disini',
+                            ),
                           ),
                         ],
                       ),
